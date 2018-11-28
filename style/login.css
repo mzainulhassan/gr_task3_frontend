@@ -1,0 +1,65 @@
+body{
+    background-color: rgb(234, 234, 234);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.navbar-inverse{
+    background-image: url("http://gridqa/member/assets/images/Header_Bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 0;
+    border-radius: 0;
+}
+
+.navbar{
+    margin-bottom: 0;
+}
+
+.navbar-header{
+    padding: 30px 0px;
+}
+
+.centerContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+}
+
+.centerBox{
+    width: 500px;
+    padding: 30px 70px;
+    background-color: rgb(237, 237, 237);
+    border: 1px solid white;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 1px lightgray;
+}
+
+.centerBox h2{
+    color: rgb(161, 154, 167);
+    margin: 0;
+    border-bottom: 1px solid rgb(223, 223, 223);
+    margin-bottom: 10px;
+}
+
+.centerBox .form-control{
+    background-color: lightgray;
+    border-radius: 0;
+    border: 1px solid white;
+}
+
+.centerBox label{
+    color: grey;
+}
+
+.centerBox .buttonContainer{
+    text-align: center;
+}
+
+.centerBox .buttonContainer button{
+    color: rgb(63, 132, 177);
+    border-radius: 0;
+    border: 1px solid rgb(63, 132, 177);
+}
+

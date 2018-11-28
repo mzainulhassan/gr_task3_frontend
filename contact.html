@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Contact</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./style/bootstrap-table.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="./js/bootstrap-table.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="style/contact.css" />
+
+</head>
+<body>
+    <div>
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                <a class="navbar-brand" href="#">Global Rescue</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a class="email" id="email"></a></li>
+                    <li><a id="logout" class="logout" href="login.html">Logout</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="topContainer container-fluid">
+            <div class="row">
+                <div class="col-lg-7 col-md-6 col-sm-3"></div>
+                <div class="col-lg-3 col-md-4 col-sm-5">
+                    <div class="viewOnMapButton">
+                        <a id="viewMap">View Contact Homes On Map</a>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-2 col-sm-3">
+                    <div class="newUserButton" id="newUserBtn" role="button" data-toggle="modal" data-target="#createContactModal">
+                        <span class="newUser">+</span>
+                        <p>New User</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tableContainer">
+            <div id="tableDiv">
+                <table id="table"></table>
+            </div>
+        </div>
+
+        <div class="mapContainer">
+            <div id="map" style="display: none"></div>
+        </div>
+
+        <nav class="navbar navbar-inverse navbar-fixed-bottom"></nav>
+    </div>
+
+    <div id="createContactModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form id="modal-form">
+                    <div class="form-group">
+                        <input type="text" placeholder="First Name" class="form-control" id="fname">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Last Name" class="form-control" id="lname">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email Address" class="form-control" id="eaddress">
+                    </div>
+                    <div class="radio">
+                        <label class="radio-inline"><input type="radio" name="gender" id="radio_male" value="male" checked>Male</label>
+                        <label class="radio-inline"><input type="radio" name="gender" id="radio_female" value="female">Female</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="number" placeholder="Phone Number" class="form-control" id="pnumber">
+                    </div>
+                    <div class="checkbox">
+                        <label><input type="checkbox" id="cb_activeStatus" value="true">Active</label>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Street" class="form-control" id="street">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="City" class="form-control" id="city">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="State" class="form-control" id="state">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="Country" class="form-control" id="country">
+                    </div>
+
+                    <div class="buttonContainer">
+                        <button type="button" class="btn btn-default" id="modal-save">Save</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if(localStorage.getItem("login") == "false")
+        {
+            window.location.href = "login.html";
+        }
+
+        $("#email").text(JSON.parse(localStorage.getItem("account")).email);
+
+        $("#logout").click(function(){
+            localStorage.setItem("login", false);
+        })
+    </script>
+
+    <script src="./js/table.js"></script>
+
+    <script>
+        $("#viewMap").click(function() {
+            if($(this).text() == "View Contact Homes On Map"){
+                $(this).text("View Contact On Table");
+                $("#tableDiv").hide();
+                $("#map").show();
+            }
+            else{
+                $(this).text("View Contact Homes On Map");
+                $("#tableDiv").show();
+                $("#map").hide();
+            }
+        });
+    </script>
+
+    <script>
+        $('#viewMap').click(function() {
+                if($(this).text() != "View Contact Homes On Map"){
+                    var map = new google.maps.Map(document.getElementById('map'), {
+                        zoom: 6,
+                        center: {
+                            lat: 30.3753,
+                            lng: 69.3451
+                        }
+                    })
+
+                    var marker;
+                    var data = $('#table').bootstrapTable('getData');
+                    for (let index = 0; index < data.length; index++) {
+                        $.get("https://maps.googleapis.com/maps/api/geocode/json?address="+ data[index].address +"&key=AIzaSyCDJ4n5j3xuaSgnzkqYyM9JgBicx531bjI", function(data,status){
+                            console.log(data.results[0].geometry.location);
+                            if(data.results.length != 0)
+                            {
+                                marker = new google.maps.Marker({
+                                position: data.results[0].geometry.location,
+                                map: map
+                                })
+                            }
+                        })
+                    }
+                }
+            })
+    </script>
+
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCDJ4n5j3xuaSgnzkqYyM9JgBicx531bjI"></script>
+
+    <script>
+        $("#newUserBtn").click(function() { 
+            document.getElementById("modal-form").reset();
+        })
+        $("#createContactModal").on('hidden.bs.modal', function(){
+            localStorage.setItem("contactID", null);
+        })
+    </script>
+
+    <script>
+        $("#modal-save").click(function() {
+            $("#table").bootstrapTable({searchText : 'qw'});
+            if(localStorage.getItem("contactID") == "null"){
+                
+                var create_data = {
+                    "firstName" : $("#fname").val(),
+                    "lastName" : $("#lname").val(),
+                    "emailAddress" : $("#eaddress").val(),
+                    "gender" : $("input[name='gender']:checked").val(),
+                    "phoneNumber" : $("#pnumber").val(),
+                    "activeStatus" : $("#cb_activeStatus").prop("checked"),
+                    "account" : {
+                        "id" : JSON.parse(localStorage.getItem("account")).id
+                    },
+                    "address" : {
+                        "street" : $("#street").val(),
+                        "city" : $("#city").val(),
+                        "state" : $("#state").val(),
+                        "country" : $("#country").val(),
+                    }
+                }
+
+                $.ajax({
+                    url: "http://localhost:8080/task2EJB/app/contact/create",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(create_data),
+                    success: function(result){
+                        $("#table").bootstrapTable("refresh");
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            } else {
+
+                var update_data = {
+                    "contactID" : localStorage.getItem("contactID"),
+                    "firstName" : $("#fname").val(),
+                    "lastName" : $("#lname").val(),
+                    "emailAddress" : $("#eaddress").val(),
+                    "gender" : $("input[name='gender']:checked").val(),
+                    "phoneNumber" : $("#pnumber").val(),
+                    "activeStatus" : $("#cb_activeStatus").prop("checked"),
+                    "address" : {
+                        "street" : $("#street").val(),
+                        "city" : $("#city").val(),
+                        "state" : $("#state").val(),
+                        "country" : $("#country").val(),
+                    }
+                }
+
+                $.ajax({
+                    url: "http://localhost:8080/task2EJB/app/contact/update",
+                    type: "PUT",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(update_data),
+                    success: function(result){
+                        $("#table").bootstrapTable("refresh");
+                    },
+                    error: function(error){
+                        console.log(error);
+                    }
+                });
+            }
+            $("#createContactModal").modal("toggle");
+        })
+    </script>
+</body>
+</html>

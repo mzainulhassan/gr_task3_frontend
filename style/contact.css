@@ -1,0 +1,123 @@
+body{
+    background-color: rgb(234, 234, 234);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.navbar-inverse{
+    background-image: url("http://gridqa/member/assets/images/Header_Bg.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    border: 0;
+    border-radius: 0;
+}
+
+.navbar{
+    margin-bottom: 0;
+}
+
+.navbar-header{
+    padding: 30px 0px;
+}
+
+.navbar-inverse .navbar-nav>li>.logout{
+    color: rgb(1, 147, 207);
+    font-weight: bold;
+    text-decoration: underline;
+}   
+
+.navbar-inverse .navbar-nav>li>.email{
+    color: white;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: default;
+}
+
+.topContainer{
+    background-color: white;
+    margin: 0 100px 10px 100px;
+    height: 100px;
+}
+
+
+.topContainer .newUserButton{
+    display: flex;
+    cursor: pointer;
+    margin: 20px 0;
+}
+
+.topContainer .newUser{
+    background-color: green;
+    border-radius: 50px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.topContainer p{
+    color: rgb(1, 147, 207);
+    margin: 0;
+}
+
+.topContainer .viewOnMapButton{
+    margin: 20px 0;
+    text-align: right;
+}
+
+.topContainer .viewOnMapButton a{
+    color: rgb(1, 147, 207);
+    font-weight: bolder;
+}
+
+.bottomContainer{
+    background-color: white;
+    margin: 10px 100px 0 100px;
+    height: 65vh;
+}
+
+.modal-content{
+    padding: 50px;
+}
+
+.modal-content .buttonContainer{
+    text-align: center;
+}
+
+.modal-content .buttonContainer button{
+    color: rgb(63, 132, 177);
+    border-radius: 0;
+    border: 1px solid rgb(63, 132, 177);
+}
+
+.tableContainer
+{
+    background-color: white;
+    margin: 0 100px;
+}
+
+#tableDiv{
+    padding: 1em;
+    height: 60vh;
+}
+
+#map {
+    height: 60vh;
+}
+
+#viewMap{
+    cursor: pointer;
+}
+
+.mapContainer{
+    background-color: white;
+    margin: 0 100px;
+}
+
+@media (max-width: 768px){
+    .topContainer .viewOnMapButton{
+        text-align: left;
+    }
+}
